@@ -106,6 +106,7 @@ const createSlider = () => {
     document.getElementById('sliderPreview').innerHTML = `
       <h1 class="text-danger">Please enter a valid time duaration</h1>
       `;
+    document.getElementById('sliderQuantity').classList.add('d-none');
   }
 
 }
