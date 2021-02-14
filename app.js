@@ -36,7 +36,6 @@ const showImages = (images) => {
     gallery.appendChild(div)
     showSpinner(false);
   })
-
 }
 
 const getImages = (query) => {
@@ -44,11 +43,7 @@ const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
-    .catch(err => showError("Sorry, couldn't find your searched item."));
-}
-
-const showError = err =>{
-  document.getElementById('error-message').innerText = err;
+    .catch(err => console.log(err));
 }
 
 let slideIndex = 0;
@@ -60,9 +55,9 @@ const selectItem = (event, img) => {
     sliders.push(img);
   }
   //removing unselected item from array
-  else if (item > -1){
+  else {
     sliders.splice(item,1);
-  }
+  }  
 }
 var timer
 const createSlider = () => {
@@ -71,6 +66,13 @@ const createSlider = () => {
     alert('Select at least 2 image.')
     return;
   }
+
+
+  const container = sliders.length;
+  console.log(container);
+  document.getElementById('sliderQuantity').innerHTML = `<h1 class="text-primary text-center">Showing slider of ${container} images</h1>`; 
+
+
   // crate slider previous next area
   sliderContainer.innerHTML = '';
   const prevNext = document.createElement('div');
@@ -79,10 +81,9 @@ const createSlider = () => {
   <span class="prev" onclick="changeItem(-1)"><i class="fas fa-chevron-left"></i></span>
   <span class="next" onclick="changeItem(1)"><i class="fas fa-chevron-right"></i></span>
   `;
-
   sliderContainer.appendChild(prevNext)
   document.querySelector('.main').style.display = 'block';
-  // hide image aria
+  // hide image area
   imagesArea.style.display = 'none';
   const duration = document.getElementById('duration').value || 1000;
   if (duration > 0) {
@@ -92,7 +93,7 @@ const createSlider = () => {
       item.innerHTML = `<img class="w-100"
       src="${slide}"
       alt="">`;
-      sliderContainer.appendChild(item)
+      sliderContainer.appendChild(item);
     })
     changeSlide(0)
     timer = setInterval(function () {
