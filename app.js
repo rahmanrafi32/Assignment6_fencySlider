@@ -44,17 +44,24 @@ const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
-    .catch(err => console.log(err))
+    .catch(err => showError("Sorry, couldn't find your searched item."));
+}
+
+const showError = err =>{
+  document.getElementById('error-message').innerText = err;
 }
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.toggle('added');
-
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
+  }
+  //removing unselected item from array
+  else if (item > -1){
+    sliders.splice(item,1);
   }
 }
 var timer
